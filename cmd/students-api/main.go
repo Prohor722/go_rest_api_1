@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"log/slog"
 	"net/http"
@@ -37,8 +36,9 @@ func main() {
 	}
 
 
-	fmt.Println("Server Started!!")
-	fmt.Printf("Serving on: %s",cfg.Address)
+	// fmt.Println("Server Started!!")
+	// fmt.Printf("Serving on: %s",cfg.Address)
+	slog.Info("Server started!",slog.String("Address",cfg.Address))
 
 	err := server.ListenAndServe()
 
