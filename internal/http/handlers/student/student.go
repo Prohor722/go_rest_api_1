@@ -2,17 +2,25 @@ package student
 
 import (
 	"encoding/json"
+	"errors"
+	"io"
 	"log/slog"
 	"net/http"
 
 	"github.com/Prohor722/go_rest_api_1/internal/types"
+	"github.com/Prohor722/go_rest_api_1/internal/utils/response"
 )
 
 func New() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request){
 		var student types.Student
-		json.NewDecoder(r.Body).Decode(&student)
-		
+		err := json.NewDecoder(r.Body).Decode(&student)
+
+		if errors.Is(err, io.EOF){
+			response.WriteJson(w, http.StatusBadRequest, err.Error())
+			return
+		}
+
 		slog.Info("creating a student")
 		w.Write([]byte("welcome to students api..."))
 	}
