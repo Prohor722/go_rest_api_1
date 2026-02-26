@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/Prohor722/go_rest_api_1/internal/config"
+	"github.com/Prohor722/go_rest_api_1/internal/http/handlers/student"
 )
 
 // import "fmt"
@@ -24,9 +25,7 @@ func main() {
 	// setup router
 	router := http.NewServeMux()
 
-	router.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request){
-		w.Write([]byte("welcome to students api..."))
-	})
+	router.HandleFunc("GET /api/students", student.New())
 
 
 	// setup server
