@@ -14,6 +14,7 @@ import (
 
 func New() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request){
+		slog.Info("creating a student")
 		var student types.Student
 		err := json.NewDecoder(r.Body).Decode(&student)
 
@@ -25,9 +26,9 @@ func New() http.HandlerFunc {
 
 		if err != nil {
 			response.WriteJson(w, http.StatusBadRequest, response.GeneralError(err))
+			return
 		}
 
-		slog.Info("creating a student")
 		w.Write([]byte("welcome to students api..."))
 
 		response.WriteJson(w, http.StatusCreated, map[string]string{"success": "OK"})
