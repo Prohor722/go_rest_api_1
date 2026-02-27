@@ -10,6 +10,7 @@ import (
 
 	"github.com/Prohor722/go_rest_api_1/internal/types"
 	"github.com/Prohor722/go_rest_api_1/internal/utils/response"
+	"github.com/go-playground/validator"
 )
 
 func New() http.HandlerFunc {
@@ -30,7 +31,11 @@ func New() http.HandlerFunc {
 		}
 
 		//Request Validation
-		
+		reqErr := validator.New().Struct(student)
+
+		if reqErr != nil {
+			response.WriteJson(w, http.StatusBadRequest, )
+		}
 
 		w.Write([]byte("welcome to students api..."))
 

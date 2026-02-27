@@ -28,3 +28,5 @@ func GeneralError(err error) Response {
 		Error: err.Error(),
 	}
 }
+
+func 
