@@ -29,6 +29,9 @@ func New() http.HandlerFunc {
 			return
 		}
 
+		//Request Validation
+		
+
 		w.Write([]byte("welcome to students api..."))
 
 		response.WriteJson(w, http.StatusCreated, map[string]string{"success": "OK"})
