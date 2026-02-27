@@ -6,8 +6,8 @@ import (
 )
 
 type Response struct{
-	Status string
-	Error string
+	Status string `json:"status"`	//to small latters
+	Error string `json:"error_msg"`	//custom also
 }
 
 const (
