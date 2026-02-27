@@ -23,6 +23,10 @@ func New() http.HandlerFunc {
 			return
 		}
 
+		if err != nil {
+			response.WriteJson(w, http.StatusBadRequest, response.GeneralError(err))
+		}
+
 		slog.Info("creating a student")
 		w.Write([]byte("welcome to students api..."))
 
