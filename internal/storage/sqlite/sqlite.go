@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/Prohor722/go_rest_api_1/internal/config"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type Sqlite struct {
@@ -11,8 +12,15 @@ type Sqlite struct {
 }
 
 func New(cfg *config.Config) (*Sqlite, error) {
-	_,err := sql.Open("sqlite3", cfg.StoragePath)
+	db,err := sql.Open("sqlite3", cfg.StoragePath)
 	if err != nil {
 		return nil, err
 	}
+
+	db.Exec(`CREATE TABLE IF NOT EXISTS students (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name TEXT,
+		email TEXT
+		age INTEGER,
+	)`)
 }
