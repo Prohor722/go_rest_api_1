@@ -103,6 +103,14 @@ func UpdateStudent(storage storage.Storage) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		id,err := strconv.ParseInt(r.PathValue("id"), 10, 64)
+		var student types.Student
+		err1 := json.NewDecoder(r.Body).Decode(&student)
+
+		if errors.Is(err1, io.EOF){
+			// response.WriteJson(w, http.StatusBadRequest, response.GeneralError(err))
+			response.WriteJson(w, http.StatusBadRequest, response.GeneralError(fmt.Errorf("empty body")))
+			return
+		}
 
 		if err != nil {
 			response.WriteJson(w, http.StatusInternalServerError, err)
@@ -110,7 +118,7 @@ func UpdateStudent(storage storage.Storage) http.HandlerFunc {
 
 		slog.Info("Updating student data", slog.Int64("id:", id))
 
-		id, err2 := storage.UpdateStudentById(id)
+		id, err2 := storage.UpdateStudentById(id, student.Name, student.Email, student.Age)
 
 		if err2 != nil {
 			response.WriteJson(w, http.StatusInternalServerError,err)
@@ -118,6 +126,6 @@ func UpdateStudent(storage storage.Storage) http.HandlerFunc {
 		}
 
 		slog.Info("Student Updated Successfully !")
-		response.WriteJson(w, http.StatusOK, id)
+		response.WriteJson(w, http.StatusOK, student)
 	}
 }
