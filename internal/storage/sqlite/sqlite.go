@@ -140,3 +140,7 @@ func (s *Sqlite) UpdateStudentById(id int64, name string, email string, age int)
 
 	return id, nil
 }
+
+func (s *Sqlite) DeleteStudent(id int64) (string, error) {
+	slog.Info("Delection process started")
+}
