@@ -8,12 +8,13 @@ import (
 	"log/slog"
 	"net/http"
 
+	"github.com/Prohor722/go_rest_api_1/internal/storage"
 	"github.com/Prohor722/go_rest_api_1/internal/types"
 	"github.com/Prohor722/go_rest_api_1/internal/utils/response"
 	"github.com/go-playground/validator/v10"
 )
 
-func New() http.HandlerFunc {
+func New(storage storage.Storage) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request){
 		slog.Info("creating a student")
 		var student types.Student
