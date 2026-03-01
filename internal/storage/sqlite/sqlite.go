@@ -89,7 +89,7 @@ func (s *Sqlite) GetStudents() ([]types.Student, error) {
 
 	defer stmt.Close()
 
-	rows, err = stmt.Query()
+	rows, err := stmt.Query()
 	
 	if err != nil {
 		return nil, err
