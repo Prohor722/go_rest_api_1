@@ -53,6 +53,6 @@ func New(storage storage.Storage) http.HandlerFunc {
 			return
 		}
 
-		response.WriteJson(w, http.StatusCreated, map[string]string{"success": "OK"})
+		response.WriteJson(w, http.StatusCreated, map[string]int64{"id": lastId})
 	}
 }
