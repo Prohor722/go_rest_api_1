@@ -45,3 +45,7 @@ func New(storage storage.Storage) http.HandlerFunc {
 		response.WriteJson(w, http.StatusCreated, map[string]string{"success": "OK"})
 	}
 }
+
+func CreateStudent(name string, email string, age int) (int64, error){
+	
+}
