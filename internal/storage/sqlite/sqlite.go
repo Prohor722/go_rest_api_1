@@ -141,7 +141,7 @@ func (s *Sqlite) UpdateStudentById(id int64, name string, email string, age int)
 	return id, nil
 }
 
-func (s *Sqlite) DeleteStudent(id int64) (string, error) {
+func (s *Sqlite) DeleteStudentById(id int64) (string, error) {
 	slog.Info("Delection process started")
 
 	stmt, err := s.Db.Prepare("DELETE students WHERE id = ?")
@@ -166,5 +166,5 @@ func (s *Sqlite) DeleteStudent(id int64) (string, error) {
         return "", fmt.Errorf("no student with id %d", id)
 	}
 
-	return fmt.Sprintf("student by id %s deleted",id), nil
+	return fmt.Sprintf("student by id %d deleted",id), nil
 }
