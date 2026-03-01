@@ -37,3 +37,8 @@ go build -o students-api.exe ./cmd/students-api
 ## Note
 
 This project previously used `github.com/mattn/go-sqlite3` which required CGO. It has been migrated to `modernc.org/sqlite` for better portability and to avoid CGO dependencies.
+
+
+## Run CMD
+
+go run cmd/students-api/main.go -config config/local.yaml
