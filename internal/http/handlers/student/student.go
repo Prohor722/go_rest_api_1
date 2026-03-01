@@ -129,3 +129,4 @@ func UpdateStudent(storage storage.Storage) http.HandlerFunc {
 		response.WriteJson(w, http.StatusOK, student)
 	}
 }
+

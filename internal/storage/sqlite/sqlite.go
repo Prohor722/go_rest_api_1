@@ -143,4 +143,28 @@ func (s *Sqlite) UpdateStudentById(id int64, name string, email string, age int)
 
 func (s *Sqlite) DeleteStudent(id int64) (string, error) {
 	slog.Info("Delection process started")
+
+	stmt, err := s.Db.Prepare("DELETE students WHERE id = ?")
+
+	if err != nil {
+		slog.Info("Initial query setup error")
+		return "",err
+	}
+
+	defer stmt.Close()
+
+	res, err := stmt.Exec(id)
+
+	if err != nil {
+		slog.Error("query execution failed")
+		return "", err
+	}
+
+	n,_ := res.RowsAffected()
+
+	if n == 0 {
+        return "", fmt.Errorf("no student with id %d", id)
+	}
+
+	return fmt.Sprintf("student by id %s deleted",id), nil
 }
