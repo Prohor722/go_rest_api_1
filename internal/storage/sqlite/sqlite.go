@@ -114,7 +114,7 @@ func (s *Sqlite) GetStudents() ([]types.Student, error) {
 	return students,nil
 }
 
-func (s *Sqlite) UpdateStudent(id int64, name string, email string, age int) (int64, error) {
+func (s *Sqlite) UpdateStudentById(id int64, name string, email string, age int) (int64, error) {
 	slog.Info("Processing started to update student")
 
 	stmt, err := s.Db.Prepare(`
