@@ -40,7 +40,7 @@ func main() {
 	router.HandleFunc("PUT /api/students/{id}", student.UpdateStudent(storage))
 	
 	//Delete
-	// router.HandleFunc("DELETE /api/students/", student.DeleteStudent(storage))
+	router.HandleFunc("DELETE /api/students/{id}", student.DeleteStudent(storage))
 	
 
 
