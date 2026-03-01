@@ -113,3 +113,33 @@ func (s *Sqlite) GetStudents() ([]types.Student, error) {
 
 	return students,nil
 }
+
+func (s *Sqlite) UpdateStudent(id int64, name string, email string, age int) (int64, error) {
+	slog.Info("Processing started to update student")
+
+	stmt, err := s.Db.Prepare(`
+        UPDATE students
+           SET name  = ?,
+               email = ?,
+               age   = ?
+         WHERE id    = ?
+    `)
+    if err != nil {
+        return 0, err
+    }
+    defer stmt.Close()
+
+	res, err := stmt.Exec(name, email, age)
+
+	if err != nil {
+		return 0, err
+	}
+
+	n,_ := res.RowsAffected()
+	
+	if n == 0 {
+        return 0, fmt.Errorf("no student with id %d", id)
+    }
+
+	return id, nil
+}

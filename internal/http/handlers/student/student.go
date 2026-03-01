@@ -97,3 +97,27 @@ func GetStudents(storage storage.Storage) http.HandlerFunc {
 		response.WriteJson(w, http.StatusOK, students)
 	}
 }
+
+
+func UpdateStudent(storage storage.Storage) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		id,err := strconv.ParseInt(r.PathValue("id"), 10, 64)
+
+		if err != nil {
+			response.WriteJson(w, http.StatusInternalServerError, err)
+		}
+
+		slog.Info("Updating student data", slog.Int64("id:", id))
+
+		id, err2 := storage.UpdateStudentById(id)
+
+		if err2 != nil {
+			response.WriteJson(w, http.StatusInternalServerError,err)
+			return 
+		}
+
+		slog.Info("Student Updated Successfully !")
+		response.WriteJson(w, http.StatusOK, id)
+	}
+}
