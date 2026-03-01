@@ -32,3 +32,7 @@ func New(cfg *config.Config) (*Sqlite, error) {
 		Db: db,
 	}, nil
 }
+
+func (s Sqlite) CreateStudent(name string, email string, age int) (int64, error){
+	return 0 , nil
+}
