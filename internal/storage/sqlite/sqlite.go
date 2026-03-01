@@ -45,6 +45,10 @@ func (s Sqlite) CreateStudent(name string, email string, age int) (int64, error)
 	if err != nil {
 		return 0, err
 	}
-	
-	return 0 , nil
+	lastId, err := res.LastInsertId()
+
+	if err != nil {
+		return 0, err
+	}
+	return lastId, nil
 }
