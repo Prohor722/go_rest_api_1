@@ -117,14 +117,10 @@ func (s *Sqlite) GetStudents() ([]types.Student, error) {
 func (s *Sqlite) UpdateStudentById(id int64, name string, email string, age int) (int64, error) {
 	slog.Info("Processing started to update student")
 
-	stmt, err := s.Db.Prepare(`
-        UPDATE students
-           SET name  = ?,
-               email = ?,
-               age   = ?
-         WHERE id    = ?
-    `)
+	stmt, err := s.Db.Prepare(`UPDATE students SET name  = ?, email = ?, age = ? WHERE id = ?`)
+
     if err != nil {
+		slog.Info("initial query error!")
         return 0, err
     }
     defer stmt.Close()
@@ -132,6 +128,7 @@ func (s *Sqlite) UpdateStudentById(id int64, name string, email string, age int)
 	res, err := stmt.Exec(name, email, age)
 
 	if err != nil {
+		slog.Error("data execusion error!")
 		return 0, err
 	}
 
