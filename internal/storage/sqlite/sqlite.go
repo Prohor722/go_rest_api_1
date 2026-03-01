@@ -3,6 +3,7 @@ package sqlite
 import (
 	"database/sql"
 	"fmt"
+	"log/slog"
 
 	"github.com/Prohor722/go_rest_api_1/internal/config"
 	"github.com/Prohor722/go_rest_api_1/internal/types"
@@ -75,4 +76,28 @@ func (s *Sqlite) GetStudentById(id int64) (types.Student, error) {
 	}
 
 	return student, nil
+}
+
+func (s *Sqlite) GetStudents() ([]types.Student, error) {
+
+	slog.Info("Getting all students.")
+	stmt, err := s.Db.Prepare("SELECT * FROM students")
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer stmt.Close()
+
+	var student types.Student
+
+	err = stmt.QueryRow().Scan(&student.Id, &student.Name, &student.Email, &student.Age)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return []types.Student{}, fmt.Errorf("no student found of id: %s",fmt.Sprint(id)) 
+		}
+		return []types.Student{}, fmt.Errorf("Query error: %w",err)
+	}
+
+	return []student, nil
 }
