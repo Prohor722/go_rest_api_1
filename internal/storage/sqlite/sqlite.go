@@ -20,8 +20,8 @@ func New(cfg *config.Config) (*Sqlite, error) {
 	_,err = db.Exec(`CREATE TABLE IF NOT EXISTS students (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		name TEXT,
-		email TEXT
-		age INTEGER,
+		email TEXT,
+		age INTEGER
 	)`)
 
 	if err != nil {

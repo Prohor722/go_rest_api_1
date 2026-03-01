@@ -12,6 +12,7 @@ import (
 
 	"github.com/Prohor722/go_rest_api_1/internal/config"
 	"github.com/Prohor722/go_rest_api_1/internal/http/handlers/student"
+	"github.com/Prohor722/go_rest_api_1/internal/storage/sqlite"
 )
 
 // import "fmt"
@@ -22,6 +23,14 @@ func main() {
 
 
 	// database setup
+	_, err := sqlite.New(cfg)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	slog.Info("storage initilized", slog.String("env", cfg.Env))
+
 	// setup router
 	router := http.NewServeMux()
 
@@ -39,14 +48,14 @@ func main() {
 	// fmt.Printf("Serving on: %s",cfg.Address)
 	slog.Info("Server started!",slog.String("Address",cfg.Address))
 
-	err := server.ListenAndServe()
+	err2 := server.ListenAndServe()
 
 	done := make(chan os.Signal, 1)
 
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
 	go func(){
-		if err != nil {
+		if err2 != nil {
 			log.Fatal("Fail to start server !")
 		}
 	}()
