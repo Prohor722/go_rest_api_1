@@ -42,6 +42,17 @@ func New(storage storage.Storage) http.HandlerFunc {
 
 		w.Write([]byte("welcome to students api..."))
 
+		lastId, err := storage.CreateStudent(
+			student.Name,
+			student.Email,
+			student.Age,
+		)
+
+		if err != nil {
+			response.WriteJson(w, http.StatusInternalServerError, err)
+			return
+		}
+
 		response.WriteJson(w, http.StatusCreated, map[string]string{"success": "OK"})
 	}
 }
