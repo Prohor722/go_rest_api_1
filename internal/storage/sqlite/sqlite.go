@@ -125,7 +125,7 @@ func (s *Sqlite) UpdateStudentById(id int64, name string, email string, age int)
     }
     defer stmt.Close()
 
-	res, err := stmt.Exec(name, email, age)
+	res, err := stmt.Exec(name, email, age, id)
 
 	if err != nil {
 		slog.Error("data execusion error!")
